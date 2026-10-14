@@ -376,16 +376,18 @@ export default function HeritageGallery({ lang }: HeritageGalleryProps) {
               </div>
 
               <div className="flex items-center gap-2">
-                <a
-                  href={activeModalItem.src}
-                  download
-                  target="_blank"
-                  rel="noreferrer"
-                  className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-zinc-300 hover:text-white transition-all cursor-pointer"
-                  title="Open High-Res Media"
-                >
-                  <Download className="w-4 h-4" />
-                </a>
+                {!(activeModalItem.category === "eden" || (activeModalItem.videoSrc && modalMediaMode === "video")) && (
+                  <a
+                    href={activeModalItem.src}
+                    download
+                    target="_blank"
+                    rel="noreferrer"
+                    className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-zinc-300 hover:text-white transition-all cursor-pointer"
+                    title="Open High-Res Media"
+                  >
+                    <Download className="w-4 h-4" />
+                  </a>
+                )}
 
                 <button
                   onClick={() => setActiveModalIndex(null)}
@@ -434,6 +436,8 @@ export default function HeritageGallery({ lang }: HeritageGalleryProps) {
                   <video
                     src={activeModalItem.videoSrc}
                     controls
+                    controlsList="nodownload"
+                    onContextMenu={(e) => e.preventDefault()}
                     autoPlay
                     playsInline
                     loop

@@ -318,6 +318,8 @@ export default function LiveEventBoard({ lang }: LiveEventBoardProps) {
               <video
                 src={activeVideoModal.highlightVideo}
                 controls
+                controlsList="nodownload"
+                onContextMenu={(e) => e.preventDefault()}
                 autoPlay
                 playsInline
                 loop
