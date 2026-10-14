@@ -40,6 +40,8 @@ export const assest = {
   // Videos
   intro_video: "/assets/videos/intro_video.mp4",
   introVideo: "/assets/videos/intro_video.mp4",
+  intro_mobile_video: "/assets/videos/intro_mobile_video.mp4",
+  introMobileVideo: "/assets/videos/intro_mobile_video.mp4",
   hooghly_tarpan_1: "/assets/videos/hooghly_tarpan_1.mp4",
   step1_video: "/assets/videos/hooghly_tarpan_1.mp4",
   Durga_devi_Birendra_Shankha_2: "/assets/videos/Durga_devi_Birendra_Shankha_2.mp4",

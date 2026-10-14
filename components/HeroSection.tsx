@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import DurgaHeroCanvas from "./ThreeViewer/DurgaHeroCanvas";
 import assest from "@/json/assest";
 import {
@@ -51,23 +51,59 @@ export default function HeroSection({
     setIsVideoMuted(!isVideoMuted);
   };
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+
+    const handleMediaChange = () => {
+      if (videoRef.current) {
+        videoRef.current.load();
+        if (isVideoPlaying) {
+          videoRef.current.play().catch(() => {});
+        }
+      }
+    };
+
+    mediaQuery.addEventListener("change", handleMediaChange);
+    return () => mediaQuery.removeEventListener("change", handleMediaChange);
+  }, [isVideoPlaying]);
+
+  useEffect(() => {
+    if (!show3DCanvas && videoRef.current) {
+      if (!isVideoPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play().catch(() => {});
+      }
+    }
+  }, [show3DCanvas, isVideoPlaying]);
+
   return (
     <section
       id="hero"
       className="relative min-h-screen w-full flex flex-col justify-between overflow-hidden pt-24 pb-12 select-none"
     >
-      {/* 1. Cinematic Background Video Layer: intro_video.mp4 */}
+      {/* 1. Cinematic Background Video Layer: intro_video.mp4 (Desktop) & intro_mobile_video.mp4 (Mobile) */}
       {!show3DCanvas ? (
         <div className="absolute inset-0 z-0 overflow-hidden">
           <video
             ref={videoRef}
-            src={assest.intro_video}
             autoPlay
             loop
             muted={isVideoMuted}
             playsInline
             className="absolute inset-0 w-full h-full object-cover scale-105 transform duration-700"
-          />
+          >
+            <source
+              src={assest.intro_video}
+              media="(min-width: 769px)"
+              type="video/mp4"
+            />
+            <source
+              src={assest.intro_mobile_video}
+              media="(max-width: 768px)"
+              type="video/mp4"
+            />
+          </video>
         </div>
       ) : (
         /* Optional 3D WebGL Darshan Canvas */
